@@ -49,9 +49,9 @@ export const Sidebar = ({ onCreatePost, isOpen = false, onClose }: SidebarProps)
           onClick={onClose}
         />
       )}
-      <div className={`w-64 bg-white border-r border-gray-200 p-4 h-full ${
-        isOpen ? 'absolute md:relative inset-y-0 left-0 z-50' : 'hidden'
-      } md:block`}>
+      <div className={`w-64 h-screen bg-white border-r border-gray-200 p-4 h-full fixed md:relative top-0 left-0 z-50 transition-transform duration-300 ${
+        isOpen ? 'translate-x-0' : '-translate-x-full'
+      } md:translate-x-0 md:block`}>
         {/* Close button for mobile */}
         {isOpen && onClose && (
           <button
