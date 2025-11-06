@@ -14,6 +14,8 @@ export const Icon = ({ name, className = '' }: IconProps) => {
     search: '🔍',
     user: '👤',
     plus: '+',
+    menu: '☰',
+    close: '✕',
   };
 
   return (

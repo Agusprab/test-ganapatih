@@ -9,10 +9,12 @@ import { usePathname } from 'next/navigation';
 
 interface SidebarProps {
   onCreatePost?: () => void;
+  isOpen?: boolean;
+  onClose?: () => void;
 }
 
 
-export const Sidebar = ({ onCreatePost }: SidebarProps) => {
+export const Sidebar = ({ onCreatePost, isOpen = false, onClose }: SidebarProps) => {
   const { token } = useAuth();
   const pathname = usePathname();
 
@@ -39,8 +41,29 @@ export const Sidebar = ({ onCreatePost }: SidebarProps) => {
   ];
 
   return (
-    <div className="w-64 bg-white border-r border-gray-200 p-4">
-      {/* Logo */}
+    <>
+      {/* Overlay for mobile */}
+      {isOpen && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-50 z-40 md:hidden"
+          onClick={onClose}
+        />
+      )}
+      <div className={`w-64 bg-white border-r border-gray-200 p-4 h-full ${
+        isOpen ? 'absolute md:relative inset-y-0 left-0 z-50' : 'hidden'
+      } md:block`}>
+        {/* Close button for mobile */}
+        {isOpen && onClose && (
+          <button
+            onClick={onClose}
+            className="md:hidden absolute top-4 right-4 p-2 rounded-lg hover:bg-gray-700 z-10"
+            aria-label="Close sidebar"
+          >
+            <Icon name="close" className="text-xl text-gray-500" />
+          </button>
+        )}
+
+        {/* Logo */}
    
 
       {/* Navigation */}
@@ -64,7 +87,7 @@ export const Sidebar = ({ onCreatePost }: SidebarProps) => {
   
 
       {/* User Profile Section */}
-      <div className="border-t border-gray-200 pt-4">
+      <div className="border-t border-gray-200 pt-4" suppressHydrationWarning>
         {userData ? (
           <div className="flex items-center space-x-3">
             <div className="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold">
@@ -87,5 +110,6 @@ export const Sidebar = ({ onCreatePost }: SidebarProps) => {
         )}
       </div>
     </div>
+    </>
   );
 };

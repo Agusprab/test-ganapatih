@@ -29,9 +29,12 @@ const DashboardPage = () => {
   const [likedPosts, setLikedPosts] = useState<Set<string>>(new Set());
   const [hasMore, setHasMore] = useState(true);
   const [loadingMore, setLoadingMore] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const { logout } = useAuth();
   const router = useRouter();
   const observerRef = useRef<HTMLDivElement>(null);
+
+  const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
 
   useEffect(() => {
     fetchFeed();
@@ -170,11 +173,11 @@ const DashboardPage = () => {
     return (
       <div className="min-h-screen bg-gray-50">
         {/* Header */}
-        <Header onLogout={logout} />
+        <Header onLogout={logout} onToggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen} />
 
         <div className="flex">
           {/* Sidebar */}
-          <Sidebar />
+          <Sidebar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
 
           {/* Main Content */}
           <main className="flex-1 max-w-2xl mx-auto p-4">
@@ -193,7 +196,7 @@ const DashboardPage = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
-      <Header onLogout={logout} />
+      <Header onLogout={logout} onToggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen} />
 
       {/* Toast Notification */}
       {toastMessage && (
@@ -206,7 +209,7 @@ const DashboardPage = () => {
 
       <div className="flex">
         {/* Sidebar */}     
-        <Sidebar />
+        <Sidebar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
 
         {/* Main Content */}
         <main className="flex-1 max-w-2xl mx-auto p-4">

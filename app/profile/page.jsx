@@ -14,7 +14,10 @@ const ProfilePage = () => {
   const [error, setError] = useState(null);
   const [toastMessage, setToastMessage] = useState('');
   const [toastType, setToastType] = useState(''); // 'success' or 'error'
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const { logout } = useAuth();
+
+  const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -91,11 +94,11 @@ const ProfilePage = () => {
     return (
       <div className="min-h-screen bg-gray-50">
         {/* Header */}
-        <Header onLogout={logout} />
+        <Header onLogout={logout} onToggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen} />
 
         <div className="flex">
           {/* Sidebar */}
-          <Sidebar />
+          <Sidebar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
 
           {/* Main Content */}
           <main className="flex-1 max-w-2xl mx-auto p-4">
@@ -115,11 +118,11 @@ const ProfilePage = () => {
     return (
       <div className="min-h-screen bg-gray-50">
         {/* Header */}
-        <Header onLogout={logout} />
+        <Header onLogout={logout} onToggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen} />
 
         <div className="flex">
           {/* Sidebar */}
-          <Sidebar />
+          <Sidebar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
 
           {/* Main Content */}
           <main className="flex-1 max-w-2xl mx-auto p-4">
@@ -137,7 +140,7 @@ const ProfilePage = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
-      <Header onLogout={logout} />
+      <Header onLogout={logout} onToggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen} />
 
       {/* Toast Notification */}
       {toastMessage && (
@@ -150,7 +153,7 @@ const ProfilePage = () => {
 
       <div className="flex">
         {/* Sidebar */}
-        <Sidebar />
+        <Sidebar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
 
         {/* Main Content */}
         <main className="flex-1 max-w-2xl mx-auto p-4">
